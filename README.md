@@ -19,13 +19,13 @@ The primary objective of this project is to delve into the loans_payment databas
 - Ensure the presence of the 'environment.yaml' file, which contains all necessary package versions for running the code. Using conda in your CLI, execute the 'conda env create -f environment.yml' command to create the environment, optionally specifying a name with the --name flag.
 
 ## File structure of the project
-* db_utils.py: Python script used to extract data from an AWS RDS using confidential .yaml credentials. It has already been executed, resulting in the creation of 'loan_payments.csv' included in the repository.
-* datatransform.py: Python script defining the DataTransform() class for transforming dataframe formats. Imported as a module into 'EDA.ipynb' notebook.
-* dataframeinfo.py: Python script defining the DataFrameInfo() class for retrieving information and insights from the dataframe. Imported as a module into 'EDA.ipynb' notebook.
-* dataframetransform.py: Python script defining the DataFrameTransformation() class for conducting dataframe transformations. Imported as a module into 'EDA.ipynb' notebook.
-* plotter.py: Python script defining the Plotter() class for providing visualizations on the dataframe. Imported as a module into 'EDA.ipynb' notebook.
-* EDA.ipynb: Notebook where exploratory data analysis (EDA) and dataframe transformation processes are conducted. It should be executed and reviewed to understand the EDA process.
-* analysis_and_visualisation.ipynb: Notebook containing analysis and visualizations of the transformed dataframe. It provides interactive insights and conclusions drawn from the data.
+* **db_utils.py**: Python script used to extract data from an AWS RDS using confidential .yaml credentials. It has already been executed, resulting in the creation of 'loan_payments.csv' included in the repository.
+* **datatransform.py**: Python script defining the DataTransform() class for transforming dataframe formats. Imported as a module into 'EDA.ipynb' notebook.
+* **dataframeinfo.py**: Python script defining the DataFrameInfo() class for retrieving information and insights from the dataframe. Imported as a module into 'EDA.ipynb' notebook.
+* **dataframetransform**.py: Python script defining the DataFrameTransformation() class for conducting dataframe transformations. Imported as a module into 'EDA.ipynb' notebook.
+* **plotter.py**: Python script defining the Plotter() class for providing visualizations on the dataframe. Imported as a module into 'EDA.ipynb' notebook.
+* **EDA.ipynb**: Notebook where exploratory data analysis (EDA) and dataframe transformation processes are conducted. It should be executed and reviewed to understand the EDA process.
+* **analysis_and_visualisation.ipynb**: Notebook containing analysis and visualizations of the transformed dataframe. It provides interactive insights and conclusions drawn from the data.
 
 ## License information
 
