@@ -24,7 +24,7 @@ The primary objective of this project is to delve into the loans_payment databas
 * **dataframeinfo.py**: Python script defining the DataFrameInfo() class for retrieving information and insights from the dataframe. Imported as a module into 'EDA.ipynb' notebook.
 * **dataframetransform**.py: Python script defining the DataFrameTransformation() class for conducting dataframe transformations. Imported as a module into 'EDA.ipynb' notebook.
 * **plotter.py**: Python script defining the Plotter() class for providing visualizations on the dataframe. Imported as a module into 'EDA.ipynb' notebook.
-* **EDA.ipynb**: Notebook where exploratory data analysis (EDA) and dataframe transformation processes are conducted. It should be executed and reviewed to understand the EDA process.
+* **EDA.ipynb**: Notebook where exploratory data analysis (EDA) and dataframe transformation processes are conducted.
 * **analysis_and_visualisation.ipynb**: Notebook containing analysis and visualizations of the transformed dataframe. It provides interactive insights and conclusions drawn from the data.
 
 ## License information
