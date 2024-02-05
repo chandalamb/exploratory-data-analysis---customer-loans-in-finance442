@@ -1,6 +1,6 @@
 import yaml
 import sqlalchemy
-import pandas as pandas
+import pandas as pd
 from sqlalchemy import create_engine
 
 
@@ -34,7 +34,7 @@ class RDSDatabaseConnector:
             loans_df.to_csv(file, encoding = 'utf-8', index = false)
 
 if __name__ == '__main__':
-    connector = RDSDatabaseConnector (credentials)
+    connector = RDSDatabaseConnector (credentials_dict)
     connector.create_engine()
     extracted_data_frame: pd.DataFrame = connector.extract_data
     save_data(extracted_data_frame)
