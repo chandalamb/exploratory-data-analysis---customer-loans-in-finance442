@@ -174,6 +174,27 @@ class DataFrameInfo:
 
         return {'total_collections': collection_sum, 'total_loan': total_loan, 'total_loan_outstanding': total_loan_left}
     
+    # Calculating the monthly collections as a percentage of total loan amount and outstanding loan amount
+    def monthly_collection_percentage_projections(self, DataFrame: pd.DataFrame, period: int):
+
+        percentage_of_loan = []
+        percentage_of_outstanding = []
+
+        for month in range(1, (period+1)):
+            projections = DataFrameInfo.calculate_total_collections_over_period(self, DataFrame, period=month)
+            
+            total_collections = projections['total_collections'] 
+            total_loan = projections['total_loan']
+            total_loan_outstanding = projections['total_loan_outstanding'] 
+            
+            percent_total_loan = DataFrameInfo.calculate_percentage(self, total_collections, total_loan) 
+            percent_outstanding_loan = DataFrameInfo.calculate_percentage(self, total_collections, total_loan_outstanding) 
+
+            percentage_of_loan.append(percent_total_loan)
+            percentage_of_outstanding.append(percent_outstanding_loan)
+        
+        return {'total_loan_percent': percentage_of_loan, 'outstanding_loan_percent': percentage_of_outstanding}
+
     # Counting the number of times a value appears in a column
     def count_value_in_column(self, DataFrame: pd.DataFrame, column_name: str, value):
         return len(DataFrame[DataFrame[column_name]==value])
