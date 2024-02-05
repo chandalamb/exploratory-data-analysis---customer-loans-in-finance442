@@ -1,9 +1,6 @@
 import numpy as np
 import pandas as pd
 from scipy import stats
-from sklearn.linear_model import LinearRegression
-from sklearn.preprocessing import RobustScaler
-from sklearn.svm import SVC
 from dataframe_info import DataFrameInfo as info
 from plotter import Plotter as plotter
 
@@ -24,7 +21,7 @@ class DataFrameTransform:
         return DataFrame
     
     # Replace null values with the median value
-    def fill_median(self, DataFrame: pd.DataFrame, column_name)
+    def fill_median(self, DataFrame: pd.DataFrame, column_name):
         DataFrame[column_name].fillna(DataFrame[column_name].median(numeric_only=True), inplace=True)
         return DataFrame
     
@@ -101,3 +98,57 @@ class DataFrameTransform:
         mask = abs_z_scores < z_score_threshold
         DataFrame = DataFrame[mask] # Keep only rows where the 'z score' is below the threshold       
         return DataFrame
+    
+    # Imputing null values in a categorical column
+    def support_vector_machine_fill(self, DataFrame: pd.DataFrame, column_to_fill: str, training_features: list = None, score: bool = False, check_distribution: bool = False):
+
+        if check_distribution == True:
+            initial_distribution = DataFrame[column_to_fill].value_counts(normalize=True)
+
+        if training_features == None: 
+            x = DataFrame.drop(info.get_null_columns(self, DataFrame), axis=1)
+        else: 
+            x = DataFrame[training_features] 
+        y = DataFrame[column_to_fill] 
+
+        # Encode string columns to numeric type
+        object_columns = x.select_dtypes(include=['object']).columns.tolist() 
+        x[object_columns] = x[object_columns].astype('category') 
+        x[object_columns] = x[object_columns].apply(lambda x: x.cat.codes) 
+
+        # Encode date columns to numeric type
+        date_columns = x.select_dtypes(include=['period[M]']).columns.tolist() 
+        x[date_columns] = x[date_columns].astype('category') 
+        x[date_columns] = x[date_columns].apply(lambda x: x.cat.codes)
+
+        scaler = RobustScaler()
+        transformer = scaler.fit(x)
+        transformer.transform(x)
+
+        # Data Split:
+        sample_size = (DataFrame[column_to_fill].isna().sum()) * 4 
+        if sample_size < 10000:
+            sample_size = 10000 
+        x_train = x[~y.isna()].sample(sample_size, random_state=123)
+        y_train = y[x.index.isin(x_train.index)]
+
+        x_test = x[y.isna()]
+
+        model = SVC()
+        model.fit(x_train, y_train)
+
+        # Run model and impute null values with predicted values:
+        prediction = model.predict(x_test)
+        DataFrame[column_to_fill].loc[y.isna()] = prediction 
+
+        if check_distribution == True:
+            final_distribution = DataFrame[column_to_fill].value_counts(normalize=True)
+            distribution_df = pd.DataFrame({'Before': round(initial_distribution, 3),'After': round(final_distribution, 3)})
+            print('Distribution: Normalised Value Count')
+            print(distribution_df)
+        
+        if score == True:
+            print(f'\nScore: {round(model.score(x_train, y_train),2)}')
+        
+        return DataFrame
+    
